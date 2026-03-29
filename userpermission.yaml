@@ -1,0 +1,74 @@
+#AmazonBedrockFullAccess
+#AmazonEC2ContainerRegistryFullAccess
+#AmazonS3FullAccess
+#AWSCodeBuildAdminAccess
+#AWSXrayFullAccess
+#BedrockAgentCoreFullAccess
+#CloudWatchLogsFullAccess
+#IAMFullAccess
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "BedrockFullAccess",
+            "Effect": "Allow",
+            "Action": "bedrock:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "BedrockAgentCoreFullAccess",
+            "Effect": "Allow",
+            "Action": "bedrock-agentcore:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "ECRFullAccess",
+            "Effect": "Allow",
+            "Action": "ecr:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "S3FullAccess",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "CodeBuildAdminAccess",
+            "Effect": "Allow",
+            "Action": "codebuild:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "XRayFullAccess",
+            "Effect": "Allow",
+            "Action": "xray:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudWatchLogsFullAccess",
+            "Effect": "Allow",
+            "Action": "logs:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "IAMFullAccess",
+            "Effect": "Allow",
+            "Action": "iam:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "BedrockSupportingPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "kms:DescribeKey",
+                "iam:ListRoles",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeSecurityGroups"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
