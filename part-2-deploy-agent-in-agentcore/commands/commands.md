@@ -1,4 +1,4 @@
-# Setup Commands
+# Setup Commands for Mac
 
 > Ensure your Python version is 3.12 or higher before continuing.
 
