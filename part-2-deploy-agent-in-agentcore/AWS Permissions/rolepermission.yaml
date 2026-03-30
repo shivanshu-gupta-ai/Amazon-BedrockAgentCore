@@ -1,0 +1,161 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ECRImageAccess",
+      "Effect": "Allow",
+      "Action": ["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"],
+      "Resource": ["arn:aws:ecr:ap-south-1:893148189164:repository/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:DescribeLogStreams", "logs:CreateLogGroup"],
+      "Resource": [
+        "arn:aws:logs:ap-south-1:893148189164:log-group:/aws/bedrock-agentcore/runtimes/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:DescribeLogGroups"],
+      "Resource": ["arn:aws:logs:ap-south-1:893148189164:log-group:*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+      "Resource": [
+        "arn:aws:logs:ap-south-1:893148189164:log-group:/aws/bedrock-agentcore/runtimes/*:log-stream:*"
+      ]
+    },
+    {
+      "Sid": "ECRTokenAccess",
+      "Effect": "Allow",
+      "Action": ["ecr:GetAuthorizationToken"],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords",
+        "xray:GetSamplingRules",
+        "xray:GetSamplingTargets"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Resource": "*",
+      "Action": "cloudwatch:PutMetricData",
+      "Condition": {
+        "StringEquals": {
+          "cloudwatch:namespace": "bedrock-agentcore"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:PutDeliverySource",
+        "logs:PutDeliveryDestination",
+        "logs:CreateDelivery",
+        "logs:GetDeliverySource",
+        "logs:DeleteDeliverySource",
+        "logs:DeleteDeliveryDestination"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "BedrockAgentCoreIdentityGetResourceApiKey",
+      "Effect": "Allow",
+      "Action": ["bedrock-agentcore:GetResourceApiKey"],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:token-vault/default",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:token-vault/default/apikeycredentialprovider/*",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default/workload-identity/*"
+      ]
+    },
+    {
+      "Sid": "BedrockAgentCoreIdentityGetCredentialProviderClientSecret",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": [
+        "arn:aws:secretsmanager:ap-south-1:893148189164:secret:bedrock-agentcore-identity!default/oauth2/*",
+        "arn:aws:secretsmanager:ap-south-1:893148189164:secret:bedrock-agentcore-identity!default/apikey/*"
+      ]
+    },
+    {
+      "Sid": "BedrockAgentCoreIdentityGetResourceOauth2Token",
+      "Effect": "Allow",
+      "Action": ["bedrock-agentcore:GetResourceOauth2Token"],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:token-vault/default",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:token-vault/default/oauth2credentialprovider/*",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default/workload-identity/myagent-*"
+      ]
+    },
+    {
+      "Sid": "BedrockModelInvocation",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream",
+        "bedrock:ApplyGuardrail"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*::foundation-model/*",
+        "arn:aws:bedrock:*:*:inference-profile/*",
+        "arn:aws:bedrock:ap-south-1:893148189164:*"
+      ]
+    },
+    {
+      "Sid": "MarketplaceSubscribeOnFirstCall",
+      "Effect": "Allow",
+      "Action": [
+        "aws-marketplace:ViewSubscriptions",
+        "aws-marketplace:Subscribe"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:CalledViaLast": "bedrock.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "BedrockAgentCoreCodeInterpreter",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:StartCodeInterpreterSession",
+        "bedrock-agentcore:InvokeCodeInterpreter",
+        "bedrock-agentcore:StopCodeInterpreterSession",
+        "bedrock-agentcore:GetCodeInterpreter",
+        "bedrock-agentcore:GetCodeInterpreterSession",
+        "bedrock-agentcore:ListCodeInterpreterSessions"
+      ],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:ap-south-1:aws:code-interpreter/aws.codeinterpreter.v1"
+      ]
+    },
+    {
+      "Sid": "BedrockAgentCoreIdentity",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:CreateWorkloadIdentity",
+        "bedrock-agentcore:GetWorkloadAccessTokenForUserId"
+      ],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default",
+        "arn:aws:bedrock-agentcore:ap-south-1:893148189164:workload-identity-directory/default/workload-identity/*"
+      ]
+    },
+    {
+      "Sid": "AwsJwtFederation",
+      "Effect": "Allow",
+      "Action": "sts:GetWebIdentityToken",
+      "Resource": "*"
+    }
+  ]
+}
